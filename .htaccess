@@ -1,0 +1,38 @@
+# --- 1. HALAMAN ERROR ---
+# PENTING:
+# - Saat di Localhost (XAMPP): Gunakan /uas_perpustakaan/404.php
+# - Saat di Hosting (Domain):  Ganti jadi /404.php (Hapus nama foldernya)
+ErrorDocument 404 /uas_perpustakaan/404.php
+
+# --- 2. KEAMANAN DASAR ---
+# Mencegah orang mengintip isi folder
+Options -Indexes
+
+# --- 3. REWRITE URL (Hapus Ekstensi .php) ---
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Base Path: Sesuaikan dengan lokasi folder aplikasi
+    # Di Localhost: /uas_perpustakaan/
+    # Di Hosting:   /  (Cukup garis miring saja)
+    RewriteBase /uas_perpustakaan/
+
+    # Jangan ubah jika itu folder (-d)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # Cek jika file .php ada (-f)
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    # Lakukan Rewrite
+    RewriteRule ^(.*)$ $1.php [L]
+</IfModule>
+
+# --- 4. PROTEKSI FILE SENSITIF (APACHE 2.4 MODERN) ---
+# Mencegah akses ke file berawalan titik (.htaccess, .env, .git)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Mencegah akses langsung ke file koneksi (PENTING!)
+# Kita kunci nama filenya saja agar aman dimanapun dia berada
+<Files "koneksi.php">
+    Require all denied
+</Files>
