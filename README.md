@@ -66,3 +66,8 @@ uas_perpustakaan/
 ├── laporan/         # PDF & Grafik
 ├── index.php        # Dashboard Utama
 └── README.md        # File Dokumentasi
+```
+
+---
+
+Copyright © 2026 Mahfuz Fauzi. All Rights Reserved.
